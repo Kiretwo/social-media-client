@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "sass src/scss:dist/css",
-    "start": "sass --watch src/scss:dist/css & live-server",
-    "live-server": "live-server --port=8080",
+    "start": "live-server & sass --watch src/scss:dist/css",
     "lint": "eslint \"src/**/*.js\"",
     "format": "prettier --log-level warn --write \"src/**/*.{js,css,md}\"",
     "posttest": "npm run format",
