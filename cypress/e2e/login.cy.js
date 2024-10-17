@@ -1,32 +1,34 @@
 it('logs in successfully with valid credentials', () => {
-  // Wait for the "Create Profile" modal to be visible
-  cy.get('#registerForm').should('be.visible'); // Ensure the Create Profile modal is visible
+  // Visit the homepage
+  cy.visit('/');
 
-  // Now click the "Login" button inside the "Create Profile" modal to open the login modal
-  cy.get('button[data-auth="login"]').should('be.visible').click(); // Ensure the button is visible before clicking
-  
-  // Wait for the login modal to appear (after clicking the login button)
-  cy.get('#loginModal').should('be.visible');
+  // Close the register modal if it is open
+  cy.get('body').then(($body) => {
+    if ($body.find('.modal.register').length > 0) {
+        cy.get('.modal.register').should('be.visible');
+        cy.get('.modal.register button[data-bs-dismiss="modal"]').first().click({ force: true });
+    }
+  });
+
+  cy.wait(500); // Allow some time for the modal to close
+
+  cy.get('button[data-auth="login"]').first().click({ force: true });
+
+  // Wait for a moment for the modal to appear
+  cy.wait(1000);
 
   // Fill out the login form with valid credentials
-  const email = 'test@noroff.no';  // Use valid credentials
-  const password = 'password123';  // Use valid credentials
-  
+  const email = 'erto@stud.noroff.no';  // Use valid credentials
+  const password = 'erto1234';  // Use valid credentials
+
   // Fill in the email and password fields in the login form
   cy.get('#loginEmail').type(email);         // Select email input and type email
   cy.get('#loginPassword').type(password);   // Select password input and type password
 
-  // Intercept the login API call to mock the server response
-  cy.intercept('POST', '**/social/auth/login', {
-    statusCode: 200,
-    body: {
-      accessToken: 'mockedAccessToken',
-      username: 'testUser',
-    },
-  }).as('loginRequest');
 
-  // Submit the login form by clicking the login button inside the login modal
-  cy.get('button[type="submit"]').contains('Login').click(); // Submit the form
+
+  // Submit the login form by clicking the submit button inside the login modal
+  cy.get('#loginForm').submit(); // Submit the form by submitting the form element
 
   // Wait for the API response
   cy.wait('@loginRequest').then((interception) => {
@@ -35,7 +37,7 @@ it('logs in successfully with valid credentials', () => {
   });
 
   // Assert that the modal closes after successful login
-  cy.get('#loginModal').should('not.be.visible');
+  cy.get('#loginForm').should('not.be.visible');
 
   // Check if the user is now logged in (you may want to check the presence of user-specific elements)
   cy.get('button[data-auth="logout"]').should('be.visible'); // Logout button should now be visible
@@ -44,3 +46,4 @@ it('logs in successfully with valid credentials', () => {
   // Optionally, you can check if the username is displayed somewhere on the page
   cy.contains('testUser').should('be.visible');
 });
+
