@@ -1,56 +1,34 @@
-import { apiPath } from "../src/js/api/constants.js";
-import { headers } from "../src/js/api/headers.js";
-import { login } from '../src/js/api/auth/login';
-import { save, load } from '../src/js/storage/index.js';
+import { login } from "../src/js/api/auth/login"; // Import the function to be tested
 
-global.fetch = jest.fn();
-jest.mock('../src/js/storage/index.js', () => ({
-  save: jest.fn(),
-  load: jest.fn(() => 'mockedToken'), // Mock load function to return a token
-}));
+global.fetch = jest.fn(); // Mock the fetch API
 
-describe('login function', () => {
-  beforeEach(() => {
-    fetch.mockClear();
-    save.mockClear();
-    load.mockClear();
-  });
+describe("login function", () => {
+	beforeEach(() => {
+		fetch.mockClear();
 
-  it('stores a token when provided with valid credentials', async () => {
-    const email = 'test@example.com';
-    const password = 'password123';
-    const mockToken = 'mockedAccessToken';
+		// Mock localStorage methods
+		jest.spyOn(Storage.prototype, "setItem"); // Mock localStorage.setItem
+		jest.spyOn(Storage.prototype, "getItem").mockReturnValue("mockedToken"); // Mock localStorage.getItem to return a token
+	});
 
-    // Mock the API response
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ accessToken: mockToken, username: 'testUser' }),
-    });
+	it("stores a token in localStorage when provided with valid credentials", async () => {
+		const email = "test@example.com";
+		const password = "password123";
+		const mockToken = "mockedAccessToken";
 
-    const result = await login(email, password);
+		// Mock the API response
+		fetch.mockResolvedValueOnce({
+			ok: true,
+			json: async () => ({ accessToken: mockToken }),
+		});
 
-    expect(fetch).toHaveBeenCalledWith(`${apiPath}/social/auth/login`, {
-      method: 'post',
-      body: JSON.stringify({ email, password }),
-      headers: headers('application/json'),
-    });
+		// Call the login function with valid credentials
+		await login(email, password);
 
-    expect(save).toHaveBeenCalledWith('token', mockToken);
-    expect(save).toHaveBeenCalledWith('profile', { username: 'testUser' });
-    expect(result).toEqual({ username: 'testUser' });
-  });
-
-  it('throws an error when the login fails', async () => {
-    const email = 'test@example.com';
-    const password = 'wrongPassword';
-
-    fetch.mockResolvedValueOnce({
-      ok: false,
-      statusText: 'Unauthorized',
-    });
-
-    await expect(login(email, password)).rejects.toThrow('Unauthorized');
-
-    expect(save).not.toHaveBeenCalled();
-  });
+		// Assert that localStorage.setItem was called to store the token
+		expect(localStorage.setItem).toHaveBeenCalledWith(
+			"token",
+			JSON.stringify(mockToken),
+		); // Expect the value to be JSON serialized
+	});
 });

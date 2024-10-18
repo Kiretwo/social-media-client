@@ -8,13 +8,15 @@
     "build": "sass src/scss:dist/css",
     "start": "concurrently \"sass --watch src/scss:dist/css\" \"live-server --port=8080 --ignore=dist/css\"",
     "lint": "eslint \"src/**/*.js\"",
-    "format": "prettier --log-level warn --write \"src/**/*.{js,css,md}\"",
+    "format": "prettier --log-level warn --write \"{src,tests}/**/*.{js,css,md}\"",
     "posttest": "npm run format",
     "pretest": "npm run lint",
     "prepare": "husky",
     "test": "jest",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "cy:test:open": "start-server-and-test start http://localhost:8080 cy:open",
+    "cy:test:run": "start-server-and-test start http://localhost:8080 cy:run"
   },
   "lint-staged": {
     "src/**/*.js": [
@@ -50,7 +52,8 @@
     "mrm-task-lint-staged": "^7.1.22",
     "mrm-task-prettier": "^5.1.22",
     "prettier": "^3.3.3",
-    "sass": "^1.54.8"
+    "sass": "^1.54.8",
+    "start-server-and-test": "^2.0.8"
   },
   "dependencies": {
     "bootstrap-dark-5": "^1.1.3"
