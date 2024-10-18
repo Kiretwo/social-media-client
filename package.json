@@ -8,7 +8,7 @@
     "build": "sass src/scss:dist/css",
     "start": "concurrently \"sass --watch src/scss:dist/css\" \"live-server --port=8080 --ignore=dist/css\"",
     "lint": "eslint \"src/**/*.js\"",
-    "format": "prettier --log-level warn --write \"{src,tests}/**/*.{js,css,md}\"",
+    "format": "prettier --log-level warn --write \"**/*.{js,css,md,scss}\"",
     "posttest": "npm run format",
     "pretest": "npm run lint",
     "prepare": "husky",
@@ -19,11 +19,11 @@
     "cy:test:run": "start-server-and-test start http://localhost:8080 cy:run"
   },
   "lint-staged": {
-    "src/**/*.js": [
+    "**/*.js": [
       "eslint --fix",
       "prettier --write"
     ],
-    "src/**/*.css": [
+    "**/*.{css,scss}": [
       "prettier --write"
     ]
   },

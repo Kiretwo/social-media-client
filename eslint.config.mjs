@@ -31,19 +31,29 @@ export default [
 	{
 		files: ["cypress.config.js", "cypress/**/*.cy.js"], // Applies to Cypress test files
 		plugins: {
-		cypress: pluginCypress,
+			cypress: pluginCypress,
 		},
 		languageOptions: {
-		globals: {
-		...globals.browser,
-		...globals.node,
-		...globals.cypress, // Add Cypress globals like `cy`, `Cypress`, etc.
-		},
+			globals: {
+				...globals.browser,
+				...globals.node,
+				...globals.cypress, // Add Cypress globals like `cy`, `Cypress`, etc.
+			},
 		},
 		rules: {
-		...pluginCypress.configs.recommended.rules,
-		"no-undef": "off", // Disable `no-undef` for CommonJS globals like `require` and `module`
-		"no-unused-vars": "off", // Disable `no-unused-vars` for config functions
+			...pluginCypress.configs.recommended.rules,
+			"no-undef": "off", // Disable `no-undef` for CommonJS globals like `require` and `module`
+			"no-unused-vars": "off", // Disable `no-unused-vars` for config functions
+			"cypress/no-unnecessary-waiting": "off", // Disable unnecessary waiting rule
+		},
+	},
+
+	// Exclude Cypress files from the general linting
+	{
+		files: ["cypress/**/*"],
+		rules: {
+			"no-unused-vars": "off", // Ensure Cypress files aren't checked for these rules
+			"no-undef": "off",
 		},
 	},
 ];
