@@ -22,7 +22,7 @@ describe('Login Functionality', () => {
     cy.get('button[data-auth="login"]').first().click({ force: true });
 
     // Wait for a moment for the modal to appear
-    cy.wait(1000);
+    cy.wait(500);
 
     // Fill out the login form with valid credentials
     cy.get('#loginEmail').type('erto@stud.noroff.no');
@@ -54,8 +54,6 @@ describe('Login Functionality', () => {
 
     // Verify that the user is logged out by checking for the login button
     cy.get('button[data-auth="login"]').should('be.visible');
-
-    cy.wait(2000); // Wait before proceeding to next test
   });
 
   it('fails to log in with invalid credentials and shows an alert', () => {

@@ -13,7 +13,8 @@
     "pretest": "npm run lint",
     "prepare": "husky",
     "test": "jest",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "lint-staged": {
     "src/**/*.js": [
