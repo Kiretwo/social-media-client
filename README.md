@@ -32,6 +32,7 @@ To test cypress run:
 npm run cy:test:open
 ```
 ^
+<br>
 This should open the webpage in the browser and cypress at the same time, then navigate (in cypress) to E2E Testing, choose browser, and find "login.cy.js".
 <br>
 <br>
@@ -66,6 +67,7 @@ git commit -m "Summary (required)" -m "Description"
 git push
 ```
 ^
+<br>
 Use the same approach when testing the commit hook (husky), any error in ".js" files will prevent a commit until the error is fixed.
 <br>
 
