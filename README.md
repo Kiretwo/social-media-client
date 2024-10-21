@@ -35,7 +35,7 @@ npm run cy:test:open
 <br>
 
 - To test cypress in terminal run: ```npm run cy:test:run```.
-
+<br>
 
 If for some reason cypress won't run/work properly when running ```npm run cy:test:open```, try opening 2 seperate bash terminals and follow these steps:
 <br>
