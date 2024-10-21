@@ -33,6 +33,7 @@ npm run cy:test:open
 ```
 ^ This should open the webpage in the browser and cypress at the same time, then navigate (in cypress) to E2E Testing, choose browser, and find "login.cy.js".
 <br>
+<br>
 
 - To test cypress in terminal run: ```npm run cy:test:run```.
 <br>
