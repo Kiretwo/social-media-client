@@ -1,4 +1,4 @@
-import { login } from "../src/js/api/auth/login"; // Import the function to be tested
+import { login } from "../src/js/api/auth/login";
 
 global.fetch = jest.fn(); // Mock the fetch API
 
@@ -6,9 +6,9 @@ describe("login function", () => {
 	beforeEach(() => {
 		fetch.mockClear();
 
-		// Mock localStorage methods
-		jest.spyOn(Storage.prototype, "setItem"); // Mock localStorage.setItem
-		jest.spyOn(Storage.prototype, "getItem").mockReturnValue("mockedToken"); // Mock localStorage.getItem to return a token
+		// Mock localStorage
+		jest.spyOn(Storage.prototype, "setItem");
+		jest.spyOn(Storage.prototype, "getItem").mockReturnValue("mockedToken");
 	});
 
 	it("stores a token in localStorage when provided with valid credentials", async () => {
@@ -29,6 +29,6 @@ describe("login function", () => {
 		expect(localStorage.setItem).toHaveBeenCalledWith(
 			"token",
 			JSON.stringify(mockToken),
-		); // Expect the value to be JSON serialized
+		);
 	});
 });

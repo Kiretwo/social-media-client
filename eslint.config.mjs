@@ -25,6 +25,7 @@ export default [
 		},
 		rules: {
 			...pluginJest.configs.recommended.rules,
+			"no-undef": "off", // Disable no-undef for Jest test files
 		},
 	},
 
