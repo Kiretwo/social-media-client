@@ -7,7 +7,7 @@
   "scripts": {
     "build": "sass src/scss:dist/css",
     "start": "concurrently \"sass --watch src/scss:dist/css\" \"live-server --port=8080 --ignore=dist/css\"",
-    "lint": "eslint \"src/**/*.js\"",
+    "lint": "eslint \"**/*.js\"",
     "format": "prettier --log-level warn --write \"**/*.{js,css,md,scss,mjs}\"",
     "posttest": "npm run format",
     "pretest": "npm run lint",
@@ -23,7 +23,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "**/*.{css,scss,mjs}": [
+    "**/*.{css,scss,md,mjs}": [
       "prettier --write"
     ]
   },
