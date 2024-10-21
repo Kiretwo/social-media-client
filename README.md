@@ -64,6 +64,7 @@ git commit -m "Summary (required)" -m "Description"
 git push
 ```
 ^ Use the same approach when testing the commit hook (husky), any error in ".js" files will prevent a commit until the error is fixed.
+<br>
 
 ### Further Notes
 - NB! ALL commits must be done in the terminal, you will encounter an error if you are trying to use github desktop for commits because of the commit hook.
